@@ -37,7 +37,7 @@ function PostsList() {
       {modalContent}
       <ul className={styles.posts}>
         {posts.map((post) => (
-          <Post author={post.enteredAuthor} body={post.enteredBody} />
+          <Post key={post.enteredBody} author={post.enteredAuthor} body={post.enteredBody} />
         ))}
       </ul>
     </>
