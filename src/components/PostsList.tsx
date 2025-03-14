@@ -1,29 +1,24 @@
 import { useState } from "react";
-import NewPost from "./NewPost";
+import NewPost, { PostData } from "./NewPost";
 import Post from "./Post";
 import styles from "./PostsList.module.css";
 import Modal from "./Modal";
 import MainHeader from "./MainHeader";
 
 function PostsList() {
-  const [enteredBody, setEnteredBody] = useState("");
-  const [enteredAuthor, setEnteredAuthor] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
+  const [posts, setPosts] = useState<PostData[]>([]);
 
-  function changeBodyHandler(event: React.ChangeEvent<HTMLTextAreaElement>) {
-    setEnteredBody(event.target.value);
-  }
-
-  function changeAuthorHandler(event: React.ChangeEvent<HTMLInputElement>) {
-    setEnteredAuthor(event.target.value);
-  }
-
-  function hideModalHandler(event: any) {
+  function hideModalHandler() {
     setModalVisible(false);
   }
 
-  function showModalHandler(event: any) {
+  function showModalHandler() {
     setModalVisible(true);
+  }
+
+  function addPostHandler(postData: any) {
+    setPosts((existingPosts) => [postData, ...existingPosts]);
   }
 
   let modalContent;
@@ -31,10 +26,7 @@ function PostsList() {
   if (modalVisible) {
     modalContent = (
       <Modal onModalHiding={hideModalHandler}>
-        <NewPost
-          onBodyChange={changeBodyHandler}
-          onAuthorChange={changeAuthorHandler}
-        />
+        <NewPost onCancel={hideModalHandler} onAddPost={addPostHandler} />
       </Modal>
     );
   }
@@ -44,7 +36,6 @@ function PostsList() {
       <MainHeader onCreatePost={showModalHandler} />
       {modalContent}
       <ul className={styles.posts}>
-        <Post author={enteredAuthor} body={enteredBody} />
         <Post author="Maria" body="Texto da Maria" />
       </ul>
     </>
