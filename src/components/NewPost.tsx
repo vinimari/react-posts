@@ -33,12 +33,12 @@ function NewPost(props: Readonly<Props>) {
   return (
     <form className={styles.form} onSubmit={submitHandler}>
       <p>
-        <label htmlFor="body">Text</label>
-        <textarea id="body" required rows={3} onChange={bodyChangeHandler} />
-      </p>
-      <p>
         <label htmlFor="name">Your name</label>
         <input type="text" id="name" required onChange={authorChangeHandler} />
+      </p>
+      <p>
+        <label htmlFor="body">Text</label>
+        <textarea id="body" required rows={3} onChange={bodyChangeHandler} />
       </p>
       <p className={styles.actions}>
         <button type="button" onClick={props.onCancel}>
