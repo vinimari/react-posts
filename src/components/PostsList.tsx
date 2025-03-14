@@ -36,7 +36,9 @@ function PostsList() {
       <MainHeader onCreatePost={showModalHandler} />
       {modalContent}
       <ul className={styles.posts}>
-        <Post author="Maria" body="Texto da Maria" />
+        {posts.map((post) => (
+          <Post author={post.enteredAuthor} body={post.enteredBody} />
+        ))}
       </ul>
     </>
   );
