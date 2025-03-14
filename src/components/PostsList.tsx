@@ -35,11 +35,23 @@ function PostsList() {
     <>
       <MainHeader onCreatePost={showModalHandler} />
       {modalContent}
-      <ul className={styles.posts}>
-        {posts.map((post) => (
-          <Post key={post.enteredBody} author={post.enteredAuthor} body={post.enteredBody} />
-        ))}
-      </ul>
+      {posts.length > 0 && (
+        <ul className={styles.posts}>
+          {posts.map((post) => (
+            <Post
+              key={post.enteredBody}
+              author={post.enteredAuthor}
+              body={post.enteredBody}
+            />
+          ))}
+        </ul>
+      )}
+      {posts.length === 0 && (
+        <div style={{ textAlign: "center", color: "white" }}>
+          <h2>There are no posts yet :(</h2>
+          <p>Start adding some!</p>
+        </div>
+      )}
     </>
   );
 }
