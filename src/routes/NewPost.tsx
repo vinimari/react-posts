@@ -1,5 +1,7 @@
 import { useState } from "react";
 import styles from "./NewPost.module.css";
+import Modal from "../components/Modal";
+import { Link } from "react-router-dom";
 
 export type PostData = {
   enteredAuthor: string;
@@ -7,7 +9,6 @@ export type PostData = {
 };
 
 type Props = {
-  onCancel: () => void;
   onAddPost: (postData: PostData) => void;
 };
 
@@ -27,26 +28,32 @@ function NewPost(props: Readonly<Props>) {
     event.preventDefault();
     const postData = { enteredAuthor, enteredBody };
     props.onAddPost(postData);
-    props.onCancel();
   }
 
   return (
-    <form className={styles.form} onSubmit={submitHandler}>
-      <p>
-        <label htmlFor="name">Your name</label>
-        <input type="text" id="name" required onChange={authorChangeHandler} />
-      </p>
-      <p>
-        <label htmlFor="body">Text</label>
-        <textarea id="body" required rows={3} onChange={bodyChangeHandler} />
-      </p>
-      <p className={styles.actions}>
-        <button type="button" onClick={props.onCancel}>
-          Cancel
-        </button>
-        <button>Submit</button>
-      </p>
-    </form>
+    <Modal>
+      <form className={styles.form} onSubmit={submitHandler}>
+        <p>
+          <label htmlFor="name">Your name</label>
+          <input
+            type="text"
+            id="name"
+            required
+            onChange={authorChangeHandler}
+          />
+        </p>
+        <p>
+          <label htmlFor="body">Text</label>
+          <textarea id="body" required rows={3} onChange={bodyChangeHandler} />
+        </p>
+        <p className={styles.actions}>
+          <Link to=".." type="button">
+            Cancel
+          </Link>
+          <button>Submit</button>
+        </p>
+      </form>
+    </Modal>
   );
 }
 

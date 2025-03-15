@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import NewPost, { PostData } from "./NewPost";
 import Post from "./Post";
 import styles from "./PostsList.module.css";
 import Modal from "./Modal";
 import MainHeader from "./MainHeader";
+import { PostData } from "../routes/NewPost";
 
 function PostsList() {
   const [posts, setPosts] = useState<PostData[]>([]);
@@ -40,20 +40,8 @@ function PostsList() {
     setPosts((existingPosts) => [postData, ...existingPosts]);
   }
 
-  let modalContent;
-
-  if (modalVisible) {
-    modalContent = (
-      <Modal onModalHiding={hideModalHandler}>
-        <NewPost onCancel={hideModalHandler} onAddPost={addPostHandler} />
-      </Modal>
-    );
-  }
-
   return (
     <>
-      <MainHeader onCreatePost={showModalHandler} />
-      {modalContent}
       {!isFetching && posts.length > 0 && (
         <ul className={styles.posts}>
           {posts.map((post) => (
