@@ -1,52 +1,31 @@
-import { useState } from "react";
-import NewPost from "./NewPost";
 import Post from "./Post";
 import styles from "./PostsList.module.css";
-import Modal from "./Modal";
-import MainHeader from "./MainHeader";
+import { PostData } from "../routes/NewPost";
+import { useLoaderData } from "react-router-dom";
 
 function PostsList() {
-  const [enteredBody, setEnteredBody] = useState("");
-  const [enteredAuthor, setEnteredAuthor] = useState("");
-  const [modalVisible, setModalVisible] = useState(false);
-
-  function changeBodyHandler(event: React.ChangeEvent<HTMLTextAreaElement>) {
-    setEnteredBody(event.target.value);
-  }
-
-  function changeAuthorHandler(event: React.ChangeEvent<HTMLInputElement>) {
-    setEnteredAuthor(event.target.value);
-  }
-
-  function hideModalHandler(event: any) {
-    setModalVisible(false);
-  }
-
-  function showModalHandler(event: any) {
-    setModalVisible(true);
-  }
-
-  let modalContent;
-
-  if (modalVisible) {
-    modalContent = (
-      <Modal onModalHiding={hideModalHandler}>
-        <NewPost
-          onBodyChange={changeBodyHandler}
-          onAuthorChange={changeAuthorHandler}
-        />
-      </Modal>
-    );
-  }
+  const posts: PostData[] = useLoaderData();
 
   return (
     <>
-      <MainHeader onCreatePost={showModalHandler} />
-      {modalContent}
-      <ul className={styles.posts}>
-        <Post author={enteredAuthor} body={enteredBody} />
-        <Post author="Maria" body="Texto da Maria" />
-      </ul>
+      {posts.length > 0 && (
+        <ul className={styles.posts}>
+          {posts.map((post) => (
+            <Post
+              key={post.id}
+              author={post.author}
+              body={post.body}
+              id={post.id}
+            />
+          ))}
+        </ul>
+      )}
+      {posts.length === 0 && (
+        <div className={styles.text}>
+          <h2>There are no posts yet :(</h2>
+          <p>Start adding some!</p>
+        </div>
+      )}
     </>
   );
 }
