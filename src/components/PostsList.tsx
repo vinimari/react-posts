@@ -15,6 +15,7 @@ function PostsList() {
               key={post.id}
               author={post.author}
               body={post.body}
+              id={post.id}
             />
           ))}
         </ul>
